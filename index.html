@@ -91,17 +91,13 @@ button:hover{
 
 <body>
 
-<!-- MUSIC -->
-<audio id="bgMusic" loop>
-<source src="https://cdn.pixabay.com/audio/2022/03/15/audio_115b9b1d6b.mp3" type="audio/mpeg">
-</audio>
-
 <div class="card">
 <div id="content"></div>
 </div>
 
 <script>
 let userName="Winnie";
+let music;
 
 /* floating hearts */
 function createHeart(){
@@ -159,19 +155,12 @@ doodles:["🎬","🍨","🌙"]
 
 let step=0;
 
-/* MUSIC FIX — mobile safe */
+/* MUSIC — mobile safe */
 function startExperience(){
-    const music = document.getElementById("bgMusic");
-
-    // unlock audio for mobile browsers
-    music.muted = true;
-    music.play().then(()=>{
-        music.pause();
-        music.currentTime = 0;
-        music.muted = false;
-        music.play();
-    }).catch(()=>{});
-
+    music = new Audio("https://cdn.pixabay.com/audio/2022/03/15/audio_115b9b1d6b.mp3");
+    music.loop = true;
+    music.volume = 0.4;
+    music.play().catch(()=>{});
     nextQuestion();
 }
 
@@ -232,7 +221,6 @@ function showReward(){
         <h2>You did it, Winnie! 💕</h2>
         <p>You worked hard today and I’m really proud of you.</p>
         <p>You always make me proud, Winnie ❤️</p>
-         <p>I missed you sooo muuch today please </p>
         <p>Here is your surprise reward 🫢</p>
         <div class="code">46AN7SkT24AW2LFT</div>
         <p style="font-size:14px">Redeem this in Google Play 🎮</p>
@@ -247,10 +235,10 @@ function showReward(){
     },3000);
 }
 
-/* START SCREEN */
+/* start screen */
 document.getElementById("content").innerHTML=`
 <div class="doodle">💌</div>
-<h2>Welcome back, Goonda Winnie 💕</h2>
+<h2>Welcome back, Winnie 💕</h2>
 <p>This tiny space is made just to make you smile.</p>
 <button onclick="startExperience()">Start ✨</button>
 `;
@@ -258,4 +246,3 @@ document.getElementById("content").innerHTML=`
 
 </body>
 </html>
-
