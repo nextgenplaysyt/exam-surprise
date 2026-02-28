@@ -200,37 +200,57 @@ function continueFlow(){
 
 function confetti(){
 
-    for(let i=0;i<60;i++){
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
+
+    for(let i=0;i<70;i++){
 
         const c=document.createElement("div");
-        c.innerText=["🎉","✨","💖","🎊"][Math.floor(Math.random()*4)];
+        c.innerText=["🎉","✨","💖","🎊","🌸"][Math.floor(Math.random()*5)];
 
         c.style.position="fixed";
-        c.style.left=Math.random()*100+"vw";
-        c.style.top="-30px";
-        c.style.fontSize=(16+Math.random()*20)+"px";
+        c.style.left=centerX+"px";
+        c.style.top=centerY+"px";
+        c.style.fontSize=(18+Math.random()*22)+"px";
+        c.style.pointerEvents="none";
 
-        // random animation duration
-        const duration = 3 + Math.random()*2;
+        // random burst direction
+        const angle=Math.random()*Math.PI*2;
+        const distance=150+Math.random()*250;
 
-        // random sideways drift
-        const drift = (Math.random()*200 - 100) + "px";
+        const x=Math.cos(angle)*distance;
+        const y=Math.sin(angle)*distance;
+
+        const fall=window.innerHeight + 200;
+        const drift=(Math.random()*200-100);
+
+        const duration=2500+Math.random()*2000;
 
         c.animate([
-            { transform:`translate(0,0) rotate(0deg)`, opacity:1 },
-            { transform:`translate(${drift},100vh) rotate(${360+Math.random()*360}deg)`, opacity:0.9 }
+            {
+                transform:"translate(0,0) scale(1) rotate(0deg)",
+                opacity:1
+            },
+            {
+                transform:`translate(${x}px,${y}px) rotate(180deg)`,
+                opacity:1,
+                offset:0.3
+            },
+            {
+                transform:`translate(${x+drift}px,${fall}px) rotate(${720+Math.random()*360}deg)`,
+                opacity:0.9
+            }
         ],{
-            duration: duration*1000,
-            easing:"ease-in",
+            duration:duration,
+            easing:"ease-out",
             fill:"forwards"
         });
 
         document.body.appendChild(c);
 
-        setTimeout(()=>c.remove(),duration*1000);
+        setTimeout(()=>c.remove(),duration);
     }
 }
-
 function showReward(){
     confetti();
     const container=document.getElementById("content");
@@ -265,5 +285,6 @@ document.getElementById("content").innerHTML=`
 
 </body>
 </html>
+
 
 
