@@ -199,16 +199,35 @@ function continueFlow(){
 }
 
 function confetti(){
+
     for(let i=0;i<60;i++){
+
         const c=document.createElement("div");
-        c.innerText="🎉";
-        c.style.position="absolute";
+        c.innerText=["🎉","✨","💖","🎊"][Math.floor(Math.random()*4)];
+
+        c.style.position="fixed";
         c.style.left=Math.random()*100+"vw";
-        c.style.top="-20px";
-        c.style.fontSize="20px";
-        c.style.animation="fall 3s linear";
+        c.style.top="-30px";
+        c.style.fontSize=(16+Math.random()*20)+"px";
+
+        // random animation duration
+        const duration = 3 + Math.random()*2;
+
+        // random sideways drift
+        const drift = (Math.random()*200 - 100) + "px";
+
+        c.animate([
+            { transform:`translate(0,0) rotate(0deg)`, opacity:1 },
+            { transform:`translate(${drift},100vh) rotate(${360+Math.random()*360}deg)`, opacity:0.9 }
+        ],{
+            duration: duration*1000,
+            easing:"ease-in",
+            fill:"forwards"
+        });
+
         document.body.appendChild(c);
-        setTimeout(()=>c.remove(),3000);
+
+        setTimeout(()=>c.remove(),duration*1000);
     }
 }
 
@@ -246,4 +265,5 @@ document.getElementById("content").innerHTML=`
 
 </body>
 </html>
+
 
