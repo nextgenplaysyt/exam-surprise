@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>You Did Amazing 💖</title>
+<style>
+    body {
+        margin: 0;
+        font-family: 'Comic Sans MS', cursive, sans-serif;
+        background: linear-gradient(135deg, #ffd6e7, #ffeef7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    .card {
+        background: white;
+        padding: 25px;
+        border-radius: 20px;
+        width: 90%;
+        max-width: 420px;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        position: relative;
+        z-index: 2;
+    }
+
+    h2 { color: #ff4f8b; }
+
+    button {
+        margin: 8px;
+        padding: 10px 16px;
+        border: none;
+        border-radius: 12px;
+        background: #ff7eb3;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    button:hover {
+        transform: scale(1.05);
+        background: #ff5fa1;
+    }
+
+    input {
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px solid #ffc1da;
+        width: 80%;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .doodle {
+        font-size: 42px;
+        margin: 10px 0;
+        animation: float 2s infinite ease-in-out;
+    }
+
+    @keyframes float {
+        0% { transform: translateY(0); }
+        50% { transform: translateY(-8px); }
+        100% { transform: translateY(0); }
+    }
+
+    .heart {
+        position: absolute;
+        font-size: 20px;
+        animation: rise 6s linear infinite;
+        opacity: 0.7;
+    }
+
+    @keyframes rise {
+        0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+        50% { opacity: 1; }
+        100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+    }
+
+    .code {
+        font-size: 22px;
+        background: #fff0f6;
+        padding: 15px;
+        border-radius: 12px;
+        margin-top: 15px;
+        color: #ff2f75;
+        font-weight: bold;
+    }
+</style>
+</head>
+<body>
+
+<!-- Background Music -->
+<audio id="bgMusic" loop>
+    <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_115b9b1d6b.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card">
+    <div id="content"></div>
+</div>
+
+<script>
+let userName = "";
+
+// floating hearts
+function createHeart(){
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    heart.innerText = ['💖','💕','🌸','✨'][Math.floor(Math.random()*4)];
+    heart.style.left = Math.random()*100 + 'vw';
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),6000);
+}
+setInterval(createHeart,800);
+
+const questions = [
+    {
+        q: "How did your exam feel?",
+        options: ["Easy 😎","Okay 🙂","Hard 😭"],
+        responses: [
+            "I knew it! You're amazing ✨",
+            "You still did your best and that's what matters 🌸",
+            "I'm proud of you for trying so hard 💖"
+        ],
+        doodles: ["🌟","🌷","🤗"]
+    },
+    {
+        q: "What do you need right now?",
+        options: ["Food 🍕","Sleep 😴","Hug 🤍"],
+        responses: [
+            "Snack time approved! 🍫",
+            "You deserve the coziest nap ever ☁️",
+            "Sending you the biggest virtual hug 🤗"
+        ],
+        doodles: ["🍕","😴","🫂"]
+    },
+    {
+        q: "Were you nervous?",
+        options: ["Very 😖","A little 😅","Not really 😌"],
+        responses: [
+            "And you still showed up — that's bravery 💪",
+            "Totally normal! You handled it well 🌼",
+            "Confidence looks good on you 😍"
+        ],
+        doodles: ["💗","🌼","✨"]
+    },
+    {
+        q: "What should we do after exams?",
+        options: ["Movie 🎬","Ice cream 🍨","Long talk 🌙"],
+        responses: [
+            "Movie date locked in 🎥",
+            "Ice cream celebration incoming 🍦",
+            "I can't wait to spend that time with you 💫"
+        ],
+        doodles: ["🎬","🍨","🌙"]
+    }
+];
+
+let step = 0;
+
+function startExperience(){
+    userName = document.getElementById('nameInput').value || "Love";
+    document.getElementById('bgMusic').play();
+    nextQuestion();
+}
+
+function nextQuestion(){
+    const container = document.getElementById('content');
+
+    if(step >= questions.length){
+        showReward();
+        return;
+    }
+
+    const q = questions[step];
+    let html = `<h2>${userName}, ${q.q}</h2>`;
+    q.options.forEach((opt,i)=>{
+        html += `<button onclick="answer(${i})">${opt}</button>`;
+    });
+    container.innerHTML = html;
+}
+
+function answer(index){
+    const container = document.getElementById('content');
+    const q = questions[step];
+
+    container.innerHTML = `
+        <div class="doodle">${q.doodles[index]}</div>
+        <h2>${q.responses[index]}</h2>
+        <p>No matter how the exam went… I'm proud of you 💖</p>
+        <button onclick="continueFlow()">Next ➜</button>
+    `;
+}
+
+function continueFlow(){
+    step++;
+    nextQuestion();
+}
+
+function confetti(){
+    for(let i=0;i<60;i++){
+        const c=document.createElement('div');
+        c.innerText='🎉';
+        c.style.position='absolute';
+        c.style.left=Math.random()*100+'vw';
+        c.style.top='-20px';
+        c.style.fontSize='20px';
+        c.style.animation='fall 3s linear';
+        document.body.appendChild(c);
+        setTimeout(()=>c.remove(),3000);
+    }
+}
+
+const style=document.createElement('style');
+style.innerHTML=`@keyframes fall{0%{transform:translateY(0)}100%{transform:translateY(100vh)}}`;
+document.head.appendChild(style);
+
+function showReward(){
+    confetti();
+    const container=document.getElementById('content');
+    container.innerHTML=`
+        <div class="doodle">🎁</div>
+        <h2>You did it, ${userName}! 💕</h2>
+        <p>You worked hard today and I’m really proud of you.</p>
+        <p>Here is your surprise reward 🫢</p>
+        <div class="code">YOUR-20RS-CODE-HERE</div>
+        <p style="font-size:14px">Redeem this in Google Play 🎮</p>
+        <div id="finalMessage"></div>
+    `;
+
+    // cinematic delayed message
+    setTimeout(()=>{
+        const msg=document.getElementById('finalMessage');
+        msg.innerHTML=`
+            <div class="doodle">💖</div>
+            <h2 style="animation:fadeIn 1s ease">Also… I missed you today ❤️</h2>
+        `;
+    },3000);
+}
+
+// Start Screen
+const container=document.getElementById('content');
+container.innerHTML=`
+    <div class="doodle">💌</div>
+    <h2>Welcome back, exam warrior 💕</h2>
+    <p>This tiny space is made just to make you smile.</p>
+    <input id="nameInput" placeholder="Enter your name ✨" />
+    <br>
+    <button onclick="startExperience()">Start ✨</button>
+`;
+</script>
+
+</body>
+</html>
