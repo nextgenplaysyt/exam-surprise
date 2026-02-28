@@ -92,7 +92,7 @@ button:hover{
 <body>
 
 <!-- MUSIC -->
-<audio id="bgMusic" preload="auto" loop>
+<audio id="bgMusic" loop>
 <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_115b9b1d6b.mp3" type="audio/mpeg">
 </audio>
 
@@ -126,14 +126,14 @@ responses:[
 doodles:["🌟","🌷","🤗"]
 },
 {
-q:"What do you need right now?",
-options:["Food 🍕","Sleep 😴","Hug 🤍"],
+q:"What do you feel like doing right now?",
+options:["Eat 🍔","Free Fire 🎮","Talk 💬"],
 responses:[
-"Snack time approved! 🍫",
-"You deserve the coziest nap ever ☁️",
-"Sending you the biggest virtual hug 🤗"
+"Yes! You deserve a good meal after all that hard work 🍔✨",
+"Game time unlocked 😎🎮 Relax mode activated!",
+"I’m always here to listen to you 💕💬"
 ],
-doodles:["🍕","😴","🫂"]
+doodles:["🍔","🎮","💬"]
 },
 {
 q:"Were you nervous?",
@@ -161,9 +161,17 @@ let step=0;
 
 /* MUSIC FIX — mobile safe */
 function startExperience(){
-    const music=document.getElementById("bgMusic");
-    music.currentTime=0;
-    music.play().catch(()=>{});
+    const music = document.getElementById("bgMusic");
+
+    // unlock audio for mobile browsers
+    music.muted = true;
+    music.play().then(()=>{
+        music.pause();
+        music.currentTime = 0;
+        music.muted = false;
+        music.play();
+    }).catch(()=>{});
+
     nextQuestion();
 }
 
@@ -224,6 +232,7 @@ function showReward(){
         <h2>You did it, Winnie! 💕</h2>
         <p>You worked hard today and I’m really proud of you.</p>
         <p>You always make me proud, Winnie ❤️</p>
+         <p>I missed you sooo muuch today please </p>
         <p>Here is your surprise reward 🫢</p>
         <div class="code">46AN7SkT24AW2LFT</div>
         <p style="font-size:14px">Redeem this in Google Play 🎮</p>
@@ -241,7 +250,7 @@ function showReward(){
 /* START SCREEN */
 document.getElementById("content").innerHTML=`
 <div class="doodle">💌</div>
-<h2>Welcome back, Winnie 💕</h2>
+<h2>Welcome back, Goonda Winnie 💕</h2>
 <p>This tiny space is made just to make you smile.</p>
 <button onclick="startExperience()">Start ✨</button>
 `;
@@ -249,3 +258,4 @@ document.getElementById("content").innerHTML=`
 
 </body>
 </html>
+
